@@ -12,7 +12,7 @@ Predicting and interpreting the dynamic response of an existing building require
 
 ## Methodology
 
-- **ETABS → OpenSees:** `models/etabs/Civil_SUT_Geometry_Modified.e2k` converted via the geometry and load tables (`models/opensees/Geometry.xlsx`, `Load.xlsx`) into `Civil_SUT.py`. The OpenSees model represents the SUT CE Department building (5 stories, 3 m story height).
+- **ETABS → OpenSees:** `models/etabs/Civil_SUT_Geometry_Modified.e2k` converted via the geometry and load tables (`models/opensees/Geometry.xlsx`, `Load.xlsx`) into `Civil_SUT.py`. The OpenSees model represents the SUT CE Department building (5 stories).
 - **Ground motions:** Scaled PEER records (`data/ground_motions/*_Scaled.txt`) using `src/scale_records/S2800V5.m` per Standard 2800.
 - **Nonlinear THA:** `models/opensees/Civil_SUT.py` runs time-history analysis; outputs `THA_Results/*_response.csv` and roof plots.
 - **Ambient identification:** ACCULN recordings `data/ambient/East001_5th.npz` (and `SUT-001-* .mat` originals) processed with `src/signal_processing/main.py` (filtering, FFT, modal identification).
@@ -77,7 +77,13 @@ Scale a new record per 2800:
 S2800V5
 ```
 
-## Results
+## Results - Linear
+
+- `results/figures/A-TMZ000_Scaled_roof_acc.png` — roof acceleration for scaled Tabas
+- `results/figures/A-TMZ000_Scaled_ground_motion.png` — input motion
+- Response CSVs in `results/figures/*.csv` allow direct comparison of simulation vs ambient-identified periods.
+
+## Results - Nonlinear
 
 - `results/figures/A-TMZ000_Scaled_roof_acc.png` — roof acceleration for scaled Tabas
 - `results/figures/A-TMZ000_Scaled_ground_motion.png` — input motion
@@ -85,7 +91,7 @@ S2800V5
 
 ## Limitations
 
-- Model is linear-elastic with fibre-informed stiffness; soil–structure interaction and non-structural components are not modelled.
+- soil–structure interaction and non-structural components are not modelled.
 - Ambient records are short samples; full operational modal analysis requires longer datasets and outlier handling.
 - ETABS–OpenSees translation is manual and specific to this building; generalization needs adapter work.
 
